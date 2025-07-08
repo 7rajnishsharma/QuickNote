@@ -95,13 +95,13 @@ const Dashboard: React.FC = () => {
 
                     <h3 className="mt-8">Notes</h3>
                     <div>
-                        {notes.map((note) => (
+                        {notes.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).map((note) => (
                             <div
                                 key={note._id}
                                 className="mt-2 flex justify-between items-center mb-2 p-4 rounded-[10px] border border-[#d9d9d9] shadow-[0px_2px_6px_0px_rgba(0,0,0,0.59)]"
                             >
                                 <span className="cursor-pointer overflow-hidden" onClick={() => handleNoteClick(note)}>
-                                    {note.title}
+                                    {note.title.length > 20 ? `${note.title.substring(0, 20)}...` : note.title}
                                 </span>
                                 <div>
                                     <button onClick={() => navigate(`/create-notes/${note._id}`)} className="ml-2 text-blue-500">
@@ -110,11 +110,11 @@ const Dashboard: React.FC = () => {
                                     <button onClick={() => handleDeleteNote(note._id)} className="text-red-500">
                                         <img src="delete.svg" alt="" className='w-6 h-6' />
                                     </button>
-
                                 </div>
                             </div>
                         ))}
                     </div>
+
                 </div>
             </main>
 

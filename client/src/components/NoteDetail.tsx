@@ -42,20 +42,23 @@ const NoteDetail: React.FC = () => {
     };
 
     return (
-        <div className="p-4">
-            {note ? (
-                <div>
-                    <h1 className="text-2xl mb-4">{note.title}</h1>
-                    <div className="flex justify-between mb-4">
-                        <button onClick={handleEdit} className="bg-blue-500 text-white px-4 py-2 rounded">Edit</button>
-                        <button onClick={handleDelete} className="bg-red-500 text-white px-4 py-2 rounded">Delete</button>
+        <main className="max-w-[450px] mx-auto px-4 border border-gray-200 shadow-lg rounded-lg mt-8">
+            <div className="p-4">
+                {note ? (
+                    <div>
+                        <h1 className="text-2xl mb-4 font-semibold">{note.title}</h1>
+                        <div className="flex justify-between mb-4">
+                            <button onClick={handleEdit} className="bg-blue-500 text-white px-4 py-2 rounded">Edit</button>
+                            <button onClick={handleDelete} className="bg-red-500 text-white px-4 py-2 rounded">Delete</button>
+                        </div>
+                        <p>{note.content}</p>
                     </div>
-                    <p>{note.content}</p>
-                </div>
-            ) : (
-                <p>Loading...</p>
-            )}
-        </div>
+                ) : (
+                    <p>Loading...</p>
+                )}
+            </div>
+        </main>
+
     );
 };
 
