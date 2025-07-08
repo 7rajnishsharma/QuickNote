@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import Note from '../models/Note';
 
+
 export const createNote = async (req: Request, res: Response): Promise<void> => {
     const { title, content } = req.body;
 
@@ -35,25 +36,17 @@ export const getNotes = async (req: Request, res: Response): Promise<void> => {
 };
 
 export const updateNote = async (req: Request, res: Response): Promise<void> => {
-    const { noteId, title, content } = req.body;
-
-    // Validate input
-    if (!noteId || !title || !content) {
-        res.status(400).json({ message: 'Note ID, title, and content are required' });
+    const { id, title, content } = req.body;
+    if (!id || !title || !content) {
+        res.status(400).json({ message: 'All fields are required' });
         return;
     }
-
     try {
-        const note = await Note.findById(noteId);
-        if (!note || note.userId.toString() !== req.user?.id) { // Use optional chaining
+        const note = await Note.findByIdAndUpdate(id, { title, content }, { new: true });
+        if (!note) {
             res.status(404).json({ message: 'Note not found' });
             return;
         }
-
-        note.title = title;
-        note.content = content;
-        await note.save();
-
         res.status(200).json(note);
     } catch (error) {
         console.error(error);
@@ -84,3 +77,19 @@ export const deleteNote = async (req: Request, res: Response): Promise<void> => 
         res.status(500).json({ message: 'Server error' });
     }
 };
+
+
+export const getNoteById = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const note = await Note.findById(req.params.id);
+        if (!note) {
+            res.status(404).json({ message: 'Note not found' });
+            return;
+        }
+        res.status(200).json(note);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+

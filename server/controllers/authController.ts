@@ -120,21 +120,31 @@ export const getProfile = async (req: Request, res: Response): Promise<void> => 
     try {
         // Get user ID from the request (assuming you have set it in the auth middleware)
         const userId = req.user?.id;
+
         // Find the user by ID
         const user = await User.findById(userId).select('name email dob'); // Select only the fields you need
         if (!user) {
             res.status(404).json({ message: 'User  not found' });
             return;
         }
+
         // Find notes associated with the user
-        const notes = await Note.find({ userId: userId }).select('title'); // Select only the title field
+        const notes = await Note.find({ userId: userId }); // Fetch all fields of notes
+
         // Construct the profile response
         const profile = {
             name: user.name,
             email: user.email,
             dob: user.dob,
-            notes: notes.map((note: { title: string }) => ({ title: note.title })) // Map notes to only include titles
+            notes: notes.map((note) => ({
+                _id: note._id,
+                title: note.title,
+                content: note.content,
+                createdAt: note.createdAt,
+                updatedAt: note.updatedAt
+            })) // Map notes to include all relevant fields
         };
+
         res.status(200).json(profile);
     } catch (error) {
         console.error(error);

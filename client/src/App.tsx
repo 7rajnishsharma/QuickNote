@@ -1,17 +1,25 @@
-import { useState } from 'react'
-import './App.css'
+// src/App.tsx
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Dashboard from './components/Dashboard';
+import CreateNote from './components/CreateNote';
+import NoteDetail from './components/NoteDetail';
+import Login from './components/Login';
+import Signup from './components/Signup';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App: React.FC = () => {
+    return (
+        <Router>
+            <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/create-notes" element={<CreateNote />} />
+                <Route path="/create-notes/:id" element={<CreateNote />} />
+                <Route path="/notes/:id" element={<NoteDetail />} />
+            </Routes>
+        </Router>
+    );
+};
 
-  return (
-    <>
-      <h1 className='text-gray-100 font-medium'>Hello vite</h1>
-      <button className="border-purple-200 text-purple-600 hover:border-transparent hover:bg-purple-600 hover:text-white active:bg-purple-700 ...">
-      Message
-    </button>
-    </>
-  )
-}
-
-export default App
+export default App;
