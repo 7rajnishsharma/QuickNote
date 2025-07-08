@@ -3,7 +3,7 @@
 
 QuickNote is a user-friendly note-taking application that allows users to create, edit, and manage their notes efficiently. The application features a clean interface and is built using modern web technologies.
 
-🎥 Project Demo – QuickNote : [YouTube](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)
+🎥 Project Demo – QuickNote : [YouTube](https://youtu.be/BxHXLqvMZ38)
 
 ## Technologies
 
