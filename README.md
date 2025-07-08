@@ -7,7 +7,7 @@ QuickNote is a user-friendly note-taking application that allows users to create
 
 ## Technologies
 
-- **Frontend**: 
+- **Frontend**
   - React
   - TypeScript
   - Tailwind CSS
