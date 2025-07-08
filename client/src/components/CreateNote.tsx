@@ -49,8 +49,9 @@ const CreateNote: React.FC = () => {
 
 
     return (
+        <main className="max-w-[450px] mx-auto px-4">
         <div className="p-4">
-            <h1 className="text-2xl mb-4">{isEditMode ? 'Edit Note' : 'Create Note'}</h1>
+            <h1 className="font-[Inter] font-bold text-[22px] leading-[2.5] tracking-normal">{isEditMode ? 'Edit Note' : 'Create Note'}</h1>
             <input
                 type="text"
                 placeholder="Note Title"
@@ -69,6 +70,7 @@ const CreateNote: React.FC = () => {
                 {isEditMode ? 'Update Note' : 'Save Note'}
             </button>
         </div>
+        </main>
     );
 };
 

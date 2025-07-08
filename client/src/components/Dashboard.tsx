@@ -13,7 +13,7 @@ interface Note {
 
 const Dashboard: React.FC = () => {
     const [notes, setNotes] = useState<Note[]>([]);
-    const [user, setUser ] = useState<{ name: string; email: string; dob: string } | null>(null);
+    const [user, setUser] = useState<{ name: string; email: string; dob: string } | null>(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -31,7 +31,7 @@ const Dashboard: React.FC = () => {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
             setNotes(response.data.notes);
-            setUser ({ name: response.data.name, email: response.data.email, dob: response.data.dob });
+            setUser({ name: response.data.name, email: response.data.email, dob: response.data.dob });
         } catch (error) {
             console.error(error);
         }
@@ -64,38 +64,63 @@ const Dashboard: React.FC = () => {
     };
 
     return (
-        <div className="p-4">
-            {/* Navbar */}
-            <nav className="flex justify-between items-center mb-4 p-4 bg-gray-800 text-white">
-                <div className="text-lg font-bold">My Notes</div>
-                <button onClick={handleLogout} className="bg-red-500 px-4 py-2 rounded">Logout</button>
-            </nav>
+        <>
+            <main className="w-full max-w-[450px] mx-auto px-4">
 
-            {/* Greeting Card */}
-            {user && (
-                <div className="mb-4 p-4 border rounded shadow">
-                    <h2 className="text-xl font-semibold">Welcome, {user.name}!</h2>
-                    <p>Email: {user.email}</p>
-                    <p>Date of Birth: {user.dob}</p>
-                </div>
-            )}
-
-            {/* Create Note Button */}
-            <button onClick={handleCreateNote} className="mb-4 p-2 bg-blue-500 text-white rounded">Create Note</button>
-
-            {/* List of Notes */}
-            <div>
-                {notes.map(note => (
-                    <div key={note._id} className="flex justify-between items-center mb-2 p-2 border rounded">
-                        <span className="cursor-pointer" onClick={() => handleNoteClick(note)}>{note.title}</span>
-                        <div>
-                            <button onClick={() => handleDeleteNote(note._id)} className="text-red-500">Delete</button>
-                            <button onClick={() => navigate(`/create-notes/${note._id}`)} className="ml-2 text-blue-500">Edit</button>
-                        </div>
+                {/* Navbar (sticks to top) */}
+                <nav className="w-full flex justify-between items-center p-4 mt-5">
+                    <div className="text-lg font-bold flex items-center justify-center gap-2">
+                        <img src="logo.svg" alt="" className='w-[47px] h-[32px] opacity-100' />
+                        <h3 className='font-[Inter] font-medium text-[20px] leading-[110%] tracking-[-0.04em] text-center text-[#232323]'>Dashboard</h3>
                     </div>
-                ))}
-            </div>
-        </div>
+
+                    <button onClick={handleLogout} className="font-[Inter] font-semibold text-[14px] leading-[150%] tracking-normal text-center underline underline-offset-0 decoration-[0.5px] decoration-solid text-[#367AFF]">Logout</button>
+                </nav>
+
+                {/* Main Content Container */}
+                <div className="w-full max-w-3xl p-4">
+                    {user && (
+                        <div className="mt-5 opacity-100 gap-[10px] p-5 rounded-[10px] border border-[#d9d9d9] shadow-[0px_2px_6px_rgba(0,0,0,0.59)]">
+                            <h2 className="font-[Inter] font-bold text-[22px] leading-[2.5] tracking-normal">Welcome, {user.name}!</h2>
+                            <p>Email: {user.email}</p>
+                        </div>
+                    )}
+
+                    <button
+                        onClick={handleCreateNote}
+                        className="mt-6 w-full h-[52px] opacity-100 rounded-[10px] px-2 py-4 bg-[#367AFF] flex items-center justify-center gap-2 text-white font-medium cursor-pointer"
+                    >
+                        Create Note
+                    </button>
+
+                    <h3 className="mt-8">Notes</h3>
+                    <div>
+                        {notes.map((note) => (
+                            <div
+                                key={note._id}
+                                className="mt-2 flex justify-between items-center mb-2 p-4 rounded-[10px] border border-[#d9d9d9] shadow-[0px_2px_6px_0px_rgba(0,0,0,0.59)]"
+                            >
+                                <span className="cursor-pointer overflow-hidden" onClick={() => handleNoteClick(note)}>
+                                    {note.title}
+                                </span>
+                                <div>
+                                    <button onClick={() => navigate(`/create-notes/${note._id}`)} className="ml-2 text-blue-500">
+                                        <img src="edit.svg" alt="" className='w-6 h-6 mr-3' />
+                                    </button>
+                                    <button onClick={() => handleDeleteNote(note._id)} className="text-red-500">
+                                        <img src="delete.svg" alt="" className='w-6 h-6' />
+                                    </button>
+
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </main>
+
+
+        </>
+
     );
 };
 
